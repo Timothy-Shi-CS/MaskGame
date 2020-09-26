@@ -18,16 +18,20 @@ class Projectile extends Entity{
     }
 
     update(){
-        if(this.y < 30){
+        let camera = this.scene.cameras.main;
+        if(this.x < camera.scrollX || this.x > camera.scrollX + config.width ||
+            this.y < camera.scrollY || this.y > camera.scrollY + config.height){
             this.destroy();
         }
     }
 }
 
 class Player extends Entity{
-    constructor(scene, x, y){
+    constructor(scene, x, y, projectileGroup){
         super(scene, x, y, "player");
+        this.play("run");
 
+        this.projectileGroup = projectileGroup;
         this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -63,6 +67,13 @@ class Player extends Entity{
         let angle = Phaser.Math.Angle.Between(this.x, this.y, pointerX, pointerY);
         let xVelocity = gameSettings.bulletSpeed * Math.cos(angle) + Phaser.Math.Between(-50, 50);
         let yVelocity = gameSettings.bulletSpeed  * Math.sin(angle) + Phaser.Math.Between(-50, 50);
-        var projectile = new Projectile(this.scene, this.x, this.y, xVelocity, yVelocity);
+        let projectile = new Projectile(this.scene, this.x, this.y, xVelocity, yVelocity);
+        this.projectileGroup.add(projectile)
+    }
+}
+
+class Mob extends Entity{
+    constructor(scene, x, y){
+        super(scene, x, y, "ship");
     }
 }
