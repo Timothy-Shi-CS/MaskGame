@@ -7,7 +7,12 @@ class MainScene extends Phaser.Scene{
         this.background = this.add.tileSprite(0, 0, 2300, 1800, "background");
         this.background.setOrigin(0,0);
         this.music = this.sound.add('music').play({volume: 0.5, loop: true});
-
+        this.sound.add('karen1');
+        this.sound.add('karen2');
+        this.sound.add('karen3');
+        this.sound.add('karen4');
+        this.sound.add('karen5');
+        this.sound.add('karen6');
         this.crowd = [this.sound.add('crowd1'), this.sound.add('crowd2')];
 
         this.crowd[0].play({volume: 0.2, loop: true});

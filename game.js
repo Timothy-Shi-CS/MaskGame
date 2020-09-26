@@ -12,6 +12,7 @@ var gameSettings = {
     spotSize: 12,
     mobSize: 16,
     infectionMax: 1000,
+    screamDelay: 7000
 }
 
 var config = {

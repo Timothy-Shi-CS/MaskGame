@@ -22,6 +22,12 @@ class TitleScreen extends Phaser.Scene{
         this.load.audio("crowd1", 'assets/sounds/crowd1.wav');
         this.load.audio("crowd2", 'assets/sounds/crowd2.wav');
         this.load.audio("music", 'assets/sounds/Mask_Man_Music.wav');
+        this.load.audio("karen1", 'assets/sounds/karen1.wav');
+        this.load.audio("karen2", 'assets/sounds/karen2.wav');
+        this.load.audio("karen3", 'assets/sounds/karen3.wav');
+        this.load.audio("karen4", 'assets/sounds/karen4.wav');
+        this.load.audio("karen5", 'assets/sounds/karen5.wav');
+        this.load.audio("karen6", 'assets/sounds/karen6.wav');
 
     }
     create() {

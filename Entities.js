@@ -106,7 +106,7 @@ class Karen extends Entity{
         this.body.setBounce(1);
         this.health = 1000;
         this.scene = scene;
-
+        this.nextShot = 0;
         this.body.velocity.x = Phaser.Math.Between(gameSettings.mobSpeedMin * 2, gameSettings.mobSpeedMax * 1.5);
         this.body.velocity.y = Phaser.Math.Between(gameSettings.mobSpeedMin * 2, gameSettings.mobSpeedMax * 1.5);
     }
@@ -119,7 +119,11 @@ class Karen extends Entity{
         let dist = Math.sqrt(Math.pow(this.x - this.scene.player.x, 2) + Math.pow(this.y - this.scene.player.y, 2));
 
         if(dist <= 300){
-
+            if(this.nextShot < game.getTime()){
+                this.nextShot = game.getTime() + gameSettings.screamDelay;
+                let id = Phaser.Math.Between(1,6);
+                this.scene.sound.play(`karen${id}`);
+            }
         }
     }
 
