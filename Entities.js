@@ -30,7 +30,8 @@ class Player extends Entity{
     constructor(scene, x, y, projectileGroup){
         super(scene, x, y, "player");
         this.body.setCollideWorldBounds(true);
-        this.play("run");
+        this.setScale(2);
+        //this.play("run");
 
         this.projectileGroup = projectileGroup;
         this.nextShot = 0;
@@ -183,8 +184,12 @@ class Mob extends Entity{
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
 
-            if(this.scene.meetingSpotCounts[this.spotIndex] > 1){
-                this.scene.infections += 0.01;
+            if(this.scene.meetingSpotCounts[this.spotIndex] > 1 && !this.stunned){
+                let rate = gameSettings.infectionRate
+                if(this.masked)
+                    rate *= 0.5;
+
+                this.scene.infections += rate;
             }
         }
     }
