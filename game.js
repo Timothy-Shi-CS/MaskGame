@@ -13,7 +13,7 @@ var gameSettings = {
     mobSize: 16,
     infectionMax: 1000,
     screamDelay: 12000,
-    karenHealth: 100,
+    karenHealth: 20,
     playerHealth: 10
 }
 
