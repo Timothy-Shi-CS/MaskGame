@@ -4,7 +4,7 @@ class MainScene extends Phaser.Scene{
     }
 
     create() {
-        this.background = this.add.tileSprite(0, 0, config.width * 5, config.height * 5, "background");
+        this.background = this.add.tileSprite(0, 0, 2300, 1800, "background");
         this.background.setOrigin(0,0);
         this.music = this.sound.add('music').play({volume: 0.5, loop: true});
 
@@ -28,6 +28,9 @@ class MainScene extends Phaser.Scene{
         this.projectiles = this.add.group();
         this.mobs = this.add.group();
         this.player = new Player(this, config.width/2 - 8, config.height - 64, this.projectiles);
+        let loc = this.randomLocation();
+        this.karen = new Karen(this, loc[0], loc[1]);
+        this.mobs.add(this.karen);
 
         for(let i = 0; i < gameSettings.mobSize; i++)
             this.mobs.add(new Mob(this, Phaser.Math.Between(16, this.background.width), Phaser.Math.Between(16, this.background.height)));
@@ -45,6 +48,7 @@ class MainScene extends Phaser.Scene{
     update(){
         //this.background.tilePositionY -= 0.5;
         this.player.update();
+        this.karen.update();
         this.updateUI();
         this.updateSound();
         // console.log(this.infections);
@@ -58,19 +62,32 @@ class MainScene extends Phaser.Scene{
             var mob = this.mobs.getChildren()[i];
             mob.update();
         }
+
+        if(this.infections >= gameSettings.infectionMax)
+            console.log('GameOver');
+        else {
+            if(this.karen.health <= 0 ){
+                console.log("WIN");
+            }
+        }
     }
 
     randomLocations(length){
         let locs = [];
         for(let i = 0; i < length; i++){
-            let point = [];
-            let padding = 32;
-            point.push(Phaser.Math.Between(padding, this.background.width - padding));
-            point.push(Phaser.Math.Between(padding, this.background.height - padding));
-            locs.push(point)
+            locs.push(this.randomLocation());
         }
 
         return locs;
+    }
+    
+    randomLocation(){
+        let point = [];
+        let padding = 32;
+        point.push(Phaser.Math.Between(padding, this.background.width - padding));
+        point.push(Phaser.Math.Between(padding, this.background.height - padding));
+
+        return point;
     }
 
     updateUI(){

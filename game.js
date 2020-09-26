@@ -6,11 +6,12 @@ var gameSettings = {
     bulletSpeed: 200,
     stunTime: 5000,
     shootDelay: 500,
-    collideCount: 2,
+    collideCount: 1,
     infectionRate: 0.005,
     maskReductionFactor: 10,
-    spotSize: 8,
-    mobSize: 16
+    spotSize: 12,
+    mobSize: 16,
+    infectionMax: 1000,
 }
 
 var config = {

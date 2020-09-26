@@ -98,6 +98,49 @@ class Player extends Entity{
     }
 }
 
+class Karen extends Entity{
+    constructor(scene, x, y){
+        super(scene, x, y, 'karen');
+        this.body.setCollideWorldBounds(true);
+        this.setScale(1.6);
+        this.body.setBounce(1);
+        this.health = 1000;
+        this.scene = scene;
+
+        this.body.velocity.x = Phaser.Math.Between(gameSettings.mobSpeedMin * 2, gameSettings.mobSpeedMax * 1.5);
+        this.body.velocity.y = Phaser.Math.Between(gameSettings.mobSpeedMin * 2, gameSettings.mobSpeedMax * 1.5);
+    }
+
+    update(){
+        this.scream();
+    }
+
+    scream(){
+        let dist = Math.sqrt(Math.pow(this.x - this.scene.player.x, 2) + Math.pow(this.y - this.scene.player.y, 2));
+
+        if(dist <= 300){
+
+        }
+    }
+
+    wearMask(){
+        this.health --;
+    }
+
+    stun(velocityX, velocityY){
+        this.stunned = true;
+        this.body.setDrag(300,300);
+        this.body.velocity.x = velocityX * 1.1;
+        this.body.velocity.y = velocityY * 1.1;
+    }
+
+    unstun(){
+        this.body.setDrag(0,0);
+        this.body.velocity.x = Phaser.Math.Between(gameSettings.mobSpeedMin * 2, gameSettings.mobSpeedMax * 1.5);
+        this.body.velocity.y = Phaser.Math.Between(gameSettings.mobSpeedMin * 2, gameSettings.mobSpeedMax * 1.5);
+    }
+}
+
 class Mob extends Entity{
     constructor(scene, x, y){
         let id = Phaser.Math.Between(1,3);
