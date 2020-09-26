@@ -15,6 +15,8 @@ class MainScene extends Phaser.Scene{
             this.mobs.add(new Mob(this, Phaser.Math.Between(16, this.background.width), Phaser.Math.Between(16, this.background.height)));
         
         this.cursorKeys = this.input.keyboard.createCursorKeys();
+        this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.cameras.main.startFollow(this.player); 
         this.cameras.main.setBounds(0, 0, this.background.width, this.background.height);
         this.physics.world.setBounds(0,0,this.background.width, this.background.height);

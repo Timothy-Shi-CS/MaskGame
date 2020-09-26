@@ -65,9 +65,11 @@ class Player extends Entity{
 
         if(this.keyA.isDown){
             this.body.setVelocityX(-speed);
+            this.flipX = false;
         }
         else if(this.keyD.isDown){
             this.body.setVelocityX(speed);
+            this.flipX = true;
         }
         if(this.keyW.isDown){
             this.body.setVelocityY(-speed);
