@@ -6,6 +6,7 @@ class MainScene extends Phaser.Scene{
     create() {
         this.background = this.add.tileSprite(0, 0, 2300, 1800, "background");
         this.background.setOrigin(0,0);
+        this.sound.stopAll();
         this.music = this.sound.add('music').play({volume: 0.5, loop: true});
         this.sound.add('karen1');
         this.sound.add('karen2');
@@ -99,7 +100,7 @@ class MainScene extends Phaser.Scene{
             this.scene.start("lose");
         }
         else {
-            if(this.karen.health <= 0 ){
+            if(this.karen.health <= 0 && this.maskedCount == gameSettings.mobSize){
                 console.log("WIN");
                 this.scene.start("win");
             }
