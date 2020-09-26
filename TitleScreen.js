@@ -16,7 +16,12 @@ class TitleScreen extends Phaser.Scene{
         this.load.spritesheet("projectile", "assets/sprites/beam.png",{
             frameWidth: 16,
             frameHeight: 16
-        })
+        });
+
+        this.load.audio("crowd1", 'assets/sounds/crowd1.wav');
+        this.load.audio("crowd2", 'assets/sounds/crowd2.wav');
+        this.load.audio("music", 'assets/sounds/Mask_Man_Music.wav');
+
     }
     create() {
         // Create animations here
