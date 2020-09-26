@@ -97,6 +97,7 @@ class MainScene extends Phaser.Scene{
 
         if(this.infections >= gameSettings.infectionMax || this.player.health <= 0){
             console.log('GameOver');
+            this.sound.stopAll();
             this.scene.start("lose");
         }
         else {
