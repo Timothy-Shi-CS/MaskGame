@@ -1,9 +1,12 @@
 var gameSettings = {
     playerSpeed: 200,
+    mobSpeedMax: 100,
+    mobSpeedMin: 40,
     chargeSpeed: 400,
     bulletSpeed: 200,
     stunTime: 5000,
-    shootDelay: 800
+    shootDelay: 500,
+    collideCount: 3
 }
 
 var config = {

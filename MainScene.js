@@ -7,11 +7,13 @@ class MainScene extends Phaser.Scene{
         this.background = this.add.tileSprite(0, 0, config.width * 5, config.height * 5, "background");
         this.background.setOrigin(0,0);
 
+        this.infections = 0;
+        this.meetingSpots = this.randomLocations(8);
         this.projectiles = this.add.group();
         this.mobs = this.add.group();
         this.player = new Player(this, config.width/2 - 8, config.height - 64, this.projectiles);
 
-        for(let i = 0; i < 100; i++)
+        for(let i = 0; i < 20; i++)
             this.mobs.add(new Mob(this, Phaser.Math.Between(16, this.background.width), Phaser.Math.Between(16, this.background.height)));
         
         this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -30,6 +32,10 @@ class MainScene extends Phaser.Scene{
             var beam = this.projectiles.getChildren()[i];
             beam.update();
         }
+        for(var i = 0; i < this.mobs.getChildren().length; i++){
+            var mob = this.mobs.getChildren()[i];
+            mob.update();
+        }
     }
 
     moveMob(mob, speed){
@@ -45,21 +51,33 @@ class MainScene extends Phaser.Scene{
         mob.x = randomX;
     }
 
+    randomLocations(length){
+        let locs = [];
+        for(let i = 0; i < length; i++){
+            let point = [];
+            let padding = 100;
+            point.push(Phaser.Math.Between(padding, this.background.width - padding));
+            point.push(Phaser.Math.Between(padding, this.background.width - padding));
+            locs.push(point)
+        }
+
+        return locs;
+    }
+
     initCollisions(){
         this.physics.add.collider(this.player, this.mobs, function(player, mob){
             player.stunned = true;
-
-            mob.body.setDrag(300,300);
-            mob.velocityX = mob.body.velocity.x;
-            mob.velocityY = mob.body.velocity.y;
-
-            mob.body.velocity.x = player.body.velocity.x * 1.1;
-            mob.body.velocity.y = player.body.velocity.y * 1.1;
-            setTimeout(function(mob){mob.update()}, gameSettings.stunTime, mob);
+            mob.stun(player.body.velocity.x, player.body.velocity.y);
+            setTimeout(function(mob){mob.unstun()}, gameSettings.stunTime, mob);
         });
 
         this.physics.add.collider(this.mobs, this.mobs, function(mob1, mob2){
 
+        });
+
+        this.physics.add.collider(this.projectiles, this.mobs, function(proj, mob){
+            mob.wearMask();
+            proj.destroy();
         });
     }
 }
