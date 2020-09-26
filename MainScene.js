@@ -87,11 +87,14 @@ class MainScene extends Phaser.Scene{
             mob.update();
         }
 
-        if(this.infections >= gameSettings.infectionMax || this.player.health <= 0)
+        if(this.infections >= gameSettings.infectionMax || this.player.health <= 0){
             console.log('GameOver');
+            this.scene.start("lose");
+        }
         else {
             if(this.karen.health <= 0 ){
                 console.log("WIN");
+                this.scene.start("win");
             }
         }
     }

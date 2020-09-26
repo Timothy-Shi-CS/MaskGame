@@ -6,6 +6,8 @@ class TitleScreen extends Phaser.Scene{
         // Load Assets Here
         this.load.image("title", "assets/images/MaskMan.png");
         this.load.image("blank", "assets/images/Blank.png");
+        this.load.image("win", "assets/images/YouWin.png");
+        this.load.image("lose", "assets/images/YouLose.png");
         this.load.image("background", "assets/images/MaskMan_background.png");
         this.load.image("player", "assets/sprites/Mask_Man_Player.png");
         this.load.image("mob1", "assets/sprites/MaskMan_Maskless1.png");
