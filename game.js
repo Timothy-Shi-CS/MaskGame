@@ -8,6 +8,7 @@ var gameSettings = {
     shootDelay: 500,
     collideCount: 2,
     infectionRate: 0.005,
+    maskReductionFactor: 10,
     spotSize: 8,
     mobSize: 16
 }
