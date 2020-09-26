@@ -8,12 +8,15 @@ class MainScene extends Phaser.Scene{
         this.background.setOrigin(0,0);
 
         this.infections = 0;
-        this.meetingSpots = this.randomLocations(8);
+        let spotSize = 2;
+        this.meetingSpots = this.randomLocations(spotSize);
+        this.meetingSpotCounts = new Array(spotSize).fill(0)
+
         this.projectiles = this.add.group();
         this.mobs = this.add.group();
         this.player = new Player(this, config.width/2 - 8, config.height - 64, this.projectiles);
 
-        for(let i = 0; i < 20; i++)
+        for(let i = 0; i < 2; i++)
             this.mobs.add(new Mob(this, Phaser.Math.Between(16, this.background.width), Phaser.Math.Between(16, this.background.height)));
         
         this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -27,6 +30,8 @@ class MainScene extends Phaser.Scene{
     update(){
         //this.background.tilePositionY -= 0.5;
         this.player.update();
+        console.log(this.infections);
+        console.log(this.meetingSpotCounts)
         //console.log(this.projectiles.getChildren().length)
         for(var i = 0; i < this.projectiles.getChildren().length; i++){
             var beam = this.projectiles.getChildren()[i];
@@ -36,19 +41,6 @@ class MainScene extends Phaser.Scene{
             var mob = this.mobs.getChildren()[i];
             mob.update();
         }
-    }
-
-    moveMob(mob, speed){
-        mob.y += speed;
-        if (mob.y > config.height){
-            this.resetMobPos(mob);
-        }
-    }
-
-    resetMobPos(mob){
-        mob.y = 0;
-        var randomX = Phaser.Math.Between(0, config.width);
-        mob.x = randomX;
     }
 
     randomLocations(length){

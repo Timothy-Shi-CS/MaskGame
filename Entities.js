@@ -107,15 +107,27 @@ class Mob extends Entity{
         this.setScale(1.2)
         this.body.setBounce(1);
 
-        this.destination = scene.meetingSpots[Phaser.Math.Between(0, scene.meetingSpots.length -1)];
         this.speed = Phaser.Math.Between(gameSettings.mobSpeedMin, gameSettings.mobSpeedMax);
         this.collideCount = gameSettings.collideCount;
         this.stunned = false;
         this.masked = false;
-        this.isMeeting = true;
+        this.inMeeting = false;
+
+        this.getNewMeetingSpot();
         this.update();
     }
     
+    getNewMeetingSpot(){
+        if(this.inMeeting){
+            this.scene.meetingSpotCounts[this.spotIndex] -= 1;
+        }
+
+        this.spotIndex = Phaser.Math.Between(0, this.scene.meetingSpots.length -1)
+        this.destination = this.scene.meetingSpots[this.spotIndex];
+
+        this.inMeeting = false;
+    }
+
     wearMask(){
         this.masked = true;
         // update sprite
@@ -132,7 +144,7 @@ class Mob extends Entity{
         this.body.setDrag(0,0);
         this.collideCount --;
         if(this.collideCount <= 0){
-            this.destination = this.scene.meetingSpots[Phaser.Math.Between(0, this.scene.meetingSpots.length -1)];
+            this.getNewMeetingSpot();
             this.collideCount = gameSettings.collideCount;
 
             //this.isMeeting = false;
@@ -142,7 +154,7 @@ class Mob extends Entity{
     }
 
     update(){
-        if(!this.stunned && this.isMeeting){
+        if(!this.stunned){
             this.goToMeetingSpot();
         }
 
@@ -162,8 +174,17 @@ class Mob extends Entity{
             this.body.velocity.x = this.speed * Math.cos(angle);
             this.body.velocity.y = this.speed * Math.sin(angle);
         }else{
+            if(!this.inMeeting){
+                this.scene.meetingSpotCounts[this.spotIndex] += 1;
+                this.inMeeting = true;
+            }
+
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
+
+            if(this.scene.meetingSpotCounts[this.spotIndex] > 1){
+                this.scene.infections += 0.01;
+            }
         }
     }
 
