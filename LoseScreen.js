@@ -3,10 +3,10 @@ class LoseScreen extends Phaser.Scene{
         super("lose");
     }
     create() {
-        var image = this.add.image(240, 180, "lose");
-        this.add.text(120, 200, "Click anywhere to play again");
-        image.setInteractive({useHandCursor: true});
-        image.on('pointerdown', () => this.clickStart());
+        this.add.image(240, 180, "lose");
+        var txt = this.add.text(120, 200, "Click here to play again");
+        txt.setInteractive({useHandCursor: true});
+        txt.on('pointerdown', () => this.clickStart());
     }
 
     clickStart(){
