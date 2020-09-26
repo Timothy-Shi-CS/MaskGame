@@ -4,14 +4,14 @@ class TitleScreen extends Phaser.Scene{
     }
     preload(){
         // Load Assets Here
-        this.load.image("background", "assets/images/background.png");
+        this.load.image("background", "assets/images/MaskMan_background.png");
         this.load.spritesheet("mob", "assets/sprites/ship.png",{
             frameWidth: 16,
             frameHeight: 16
         });
-        this.load.spritesheet("player", "assets/sprites/player.png",{
+        this.load.spritesheet("player", "assets/sprites/Mask_Man_Player.png",{
             frameWidth: 16,
-            frameHeight: 24
+            frameHeight: 16
         });
         this.load.spritesheet("projectile", "assets/sprites/beam.png",{
             frameWidth: 16,
