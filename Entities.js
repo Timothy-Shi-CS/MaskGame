@@ -34,7 +34,6 @@ class Player extends Entity{
 
         this.projectileGroup = projectileGroup;
         this.nextShot = 0;
-        this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.shift = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -81,7 +80,7 @@ class Player extends Entity{
 
     update(){
         this.movePlayer();
-        if(Phaser.Input.Keyboard.JustDown(this.spacebar)){
+        if(game.input.activePointer.isDown){
             let pointer = this.scene.input.mousePointer;
 
             if(this.nextShot < game.getTime()){
