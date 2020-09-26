@@ -1,3 +1,3 @@
 # MaskGame
 
-# Authors: Timothy Shi, Zheng Lu, M2DaG
+Authors: Timothy Shi, Zheng Lu, M2DaG
