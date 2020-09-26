@@ -16,6 +16,11 @@ class TitleScreen extends Phaser.Scene{
         this.load.image("karen", "assets/sprites/MaskMan_Karen.png");
         this.load.image("maskedKaren", "assets/sprites/MaskMan_Karenmasked.png");
 
+        this.load.image("decor1", "assets/images/bush.png");
+        this.load.image("decor2", "assets/images/flower_1.png");
+        this.load.image("decor3", "assets/images/rock_1.png");
+        this.load.image("decor4", "assets/images/stones.png");
+        this.load.image("decor5", "assets/images/tree.png");
 
         this.load.image("projectile", "assets/sprites/mask_projectile.png");
 

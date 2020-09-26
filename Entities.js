@@ -33,11 +33,15 @@ class Player extends Entity{
 
         this.projectileGroup = projectileGroup;
         this.nextShot = 0;
+        this.health = gameSettings.playerHealth;
         this.shift = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyS = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.keyD = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    }
+    damage(dmg){
+        this.health -= dmg;
     }
 
     movePlayer(){
@@ -104,8 +108,9 @@ class Karen extends Entity{
         this.body.setCollideWorldBounds(true);
         this.setScale(1.6);
         this.body.setBounce(1);
-        this.health = 1000;
+        this.health = gameSettings.karenHealth;
         this.scene = scene;
+        this.name = 'karen';
         this.nextShot = 0;
         this.body.velocity.x = Phaser.Math.Between(gameSettings.mobSpeedMin * 2, gameSettings.mobSpeedMax * 1.5);
         this.body.velocity.y = Phaser.Math.Between(gameSettings.mobSpeedMin * 2, gameSettings.mobSpeedMax * 1.5);
@@ -150,6 +155,7 @@ class Mob extends Entity{
         let id = Phaser.Math.Between(1,3);
         super(scene, x, y, `mob${id}`);
         this.id = id;
+        this.name = `mob${id}`;
         this.body.setCollideWorldBounds(true);
         this.setScale(2)
         this.body.setBounce(1);
@@ -176,8 +182,11 @@ class Mob extends Entity{
     }
 
     wearMask(){
-        this.masked = true;
-        this.setTexture(`masked${this.id}`);
+        if(!this.masked){
+            this.scene.maskedCount += 1;
+            this.masked = true;
+            this.setTexture(`masked${this.id}`);
+        }
     }
 
     stun(velocityX, velocityY){

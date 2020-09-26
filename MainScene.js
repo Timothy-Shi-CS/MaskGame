@@ -19,17 +19,25 @@ class MainScene extends Phaser.Scene{
         this.crowd[1].play({volume: 0, loop: true});
 
         this.infections = 0;
-        this.infectionText = this.add.text(10, 10, "Infection: " + this.infections, {
+        this.maskedCount = 0;
+        let textStyle = {
             fontFamily: 'monospace',
             fontSize: 16,
             align: 'left'
-        });
+        };
+        this.infectionText = this.add.text(10, 10, "Town Health: " + gameSettings.infectionMax, textStyle);
+        this.healthText = this.add.text(10, 30, "Mask Man Health: " + gameSettings.playerHealth, textStyle);
+        this.maskedText = this.add.text(10, 50, "Masked: " + 0 + '/' + gameSettings.mobSize, textStyle);
         this.infectionText.setScrollFactor(0);
+        this.healthText.setScrollFactor(0);
+        this.maskedText.setScrollFactor(0);
 
         let spotSize = gameSettings.spotSize;
         this.meetingSpots = this.randomLocations(spotSize);
         this.meetingSpotCounts = new Array(spotSize).fill(0);
 
+        this.decor = this.add.group();
+        this.addDecor(100);
         this.projectiles = this.add.group();
         this.mobs = this.add.group();
         this.player = new Player(this, config.width/2 - 8, config.height - 64, this.projectiles);
@@ -50,6 +58,17 @@ class MainScene extends Phaser.Scene{
         this.initCollisions();
     }
 
+    addDecor(count){
+        for(let i = 0; i < count; i++){
+            let id = Phaser.Math.Between(1,5);
+            let point = this.randomLocation();
+            let decor = this.add.image(point[0], point[1], `decor${id}`);
+            if(id == 5)
+                decor.setScale(4);
+            this.decor.add(decor);
+        }
+    }
+
     update(){
         //this.background.tilePositionY -= 0.5;
         this.player.update();
@@ -68,7 +87,7 @@ class MainScene extends Phaser.Scene{
             mob.update();
         }
 
-        if(this.infections >= gameSettings.infectionMax)
+        if(this.infections >= gameSettings.infectionMax || this.player.health <= 0)
             console.log('GameOver');
         else {
             if(this.karen.health <= 0 ){
@@ -96,7 +115,9 @@ class MainScene extends Phaser.Scene{
     }
 
     updateUI(){
-        this.infectionText.setText("Infection: " + Math.floor(this.infections));
+        this.infectionText.setText("Town Health: " + (gameSettings.infectionMax - Math.floor(this.infections)));
+        this.healthText.setText("Mask Man Health: " + this.player.health);
+        this.maskedText.setText("Masked: " + this.maskedCount + '/' + gameSettings.mobSize);
     }
 
     updateSound(){
@@ -113,6 +134,9 @@ class MainScene extends Phaser.Scene{
     initCollisions(){
         this.physics.add.collider(this.player, this.mobs, function(player, mob){
             player.stunned = true;
+            if(mob.name == 'karen')
+                player.damage(1);
+
             mob.stun(player.body.velocity.x, player.body.velocity.y);
             setTimeout(function(mob){mob.unstun()}, gameSettings.stunTime, mob);
         });

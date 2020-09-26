@@ -3,7 +3,7 @@ var gameSettings = {
     mobSpeedMax: 100,
     mobSpeedMin: 40,
     chargeSpeed: 400,
-    bulletSpeed: 200,
+    bulletSpeed: 500,
     stunTime: 5000,
     shootDelay: 500,
     collideCount: 1,
@@ -12,7 +12,9 @@ var gameSettings = {
     spotSize: 12,
     mobSize: 16,
     infectionMax: 1000,
-    screamDelay: 7000
+    screamDelay: 12000,
+    karenHealth: 100,
+    playerHealth: 10
 }
 
 var config = {
