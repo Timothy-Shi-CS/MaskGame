@@ -30,3 +30,4 @@ var config = {
 }
 
 var game = new Phaser.Game(config);
+game.scene.start("loadGame");

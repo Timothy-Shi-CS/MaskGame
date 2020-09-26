@@ -4,6 +4,7 @@ class TitleScreen extends Phaser.Scene{
     }
     preload(){
         // Load Assets Here
+        this.load.image("title", "assets/images/MaskMan.png");
         this.load.image("background", "assets/images/MaskMan_background.png");
         this.load.image("player", "assets/sprites/Mask_Man_Player.png");
         this.load.image("mob1", "assets/sprites/MaskMan_Maskless1.png");
@@ -25,7 +26,13 @@ class TitleScreen extends Phaser.Scene{
     }
     create() {
         // Create animations here
-        this.add.text(20, 20, "Loading game...");
+        var image = this.add.image(240, 180, "title");
+        this.add.text(140, 200, "Click anywhere to start");
+        image.setInteractive({useHandCursor: true});
+        image.on('pointerdown', () => this.clickStart());
+    }
+
+    clickStart(){
         this.scene.start("startGame");
     }
 }
