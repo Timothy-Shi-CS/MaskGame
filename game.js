@@ -7,7 +7,9 @@ var gameSettings = {
     stunTime: 5000,
     shootDelay: 500,
     collideCount: 2,
-    infectionRate: 0.005
+    infectionRate: 0.005,
+    spotSize: 4,
+    mobSize: 6
 }
 
 var config = {

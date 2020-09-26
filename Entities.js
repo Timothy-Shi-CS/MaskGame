@@ -30,7 +30,8 @@ class Player extends Entity{
     constructor(scene, x, y, projectileGroup){
         super(scene, x, y, "player");
         this.body.setCollideWorldBounds(true);
-        this.play("run");
+        this.setScale(2);
+        //this.play("run");
 
         this.projectileGroup = projectileGroup;
         this.nextShot = 0;

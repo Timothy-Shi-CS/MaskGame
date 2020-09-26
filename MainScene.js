@@ -15,7 +15,7 @@ class MainScene extends Phaser.Scene{
         });
         this.infectionText.setScrollFactor(0);
 
-        let spotSize = 2;
+        let spotSize = gameSettings.spotSize;
         this.meetingSpots = this.randomLocations(spotSize);
         this.meetingSpotCounts = new Array(spotSize).fill(0)
 
@@ -23,7 +23,7 @@ class MainScene extends Phaser.Scene{
         this.mobs = this.add.group();
         this.player = new Player(this, config.width/2 - 8, config.height - 64, this.projectiles);
 
-        for(let i = 0; i < 2; i++)
+        for(let i = 0; i < gameSettings.mobSize; i++)
             this.mobs.add(new Mob(this, Phaser.Math.Between(16, this.background.width), Phaser.Math.Between(16, this.background.height)));
         
         this.cursorKeys = this.input.keyboard.createCursorKeys();
