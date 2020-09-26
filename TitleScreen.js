@@ -5,6 +5,7 @@ class TitleScreen extends Phaser.Scene{
     preload(){
         // Load Assets Here
         this.load.image("title", "assets/images/MaskMan.png");
+        this.load.image("blank", "assets/images/Blank.png");
         this.load.image("background", "assets/images/MaskMan_background.png");
         this.load.image("player", "assets/sprites/Mask_Man_Player.png");
         this.load.image("mob1", "assets/sprites/MaskMan_Maskless1.png");
@@ -44,6 +45,6 @@ class TitleScreen extends Phaser.Scene{
     }
 
     clickStart(){
-        this.scene.start("startGame");
+        this.scene.start("directions");
     }
 }
