@@ -11,8 +11,7 @@ class Entity extends Phaser.GameObjects.Sprite{
 class Projectile extends Entity{
     constructor(scene, x, y, xVelocity, yVelocity){
         super(scene, x, y, "projectile");
-
-        this.play("shoot");
+        this.setScale(3);
         this.body.velocity.x = xVelocity;
         this.body.velocity.y = yVelocity;
     }
@@ -31,7 +30,6 @@ class Player extends Entity{
         super(scene, x, y, "player");
         this.body.setCollideWorldBounds(true);
         this.setScale(2);
-        //this.play("run");
 
         this.projectileGroup = projectileGroup;
         this.nextShot = 0;
@@ -102,11 +100,11 @@ class Player extends Entity{
 
 class Mob extends Entity{
     constructor(scene, x, y){
-        super(scene, x, y, "ship");
-        this.play("mob1_anim");
-
+        let id = Phaser.Math.Between(1,3);
+        super(scene, x, y, `mob${id}`);
+        this.id = id;
         this.body.setCollideWorldBounds(true);
-        this.setScale(1.2)
+        this.setScale(2)
         this.body.setBounce(1);
 
         this.speed = Phaser.Math.Between(gameSettings.mobSpeedMin, gameSettings.mobSpeedMax);
@@ -132,7 +130,7 @@ class Mob extends Entity{
 
     wearMask(){
         this.masked = true;
-        // update sprite
+        this.setTexture(`masked${this.id}`);
     }
 
     stun(velocityX, velocityY){
@@ -160,10 +158,10 @@ class Mob extends Entity{
             this.goToMeetingSpot();
         }
 
-        if(this.body.velocity.x != 0 && this.body.velocity.y != 0){
-            let angle = Math.atan2(this.body.velocity.y, this.body.velocity.x);
-            this.setRotation(angle - Math.PI/2);
-        }
+        // if(this.body.velocity.x != 0 && this.body.velocity.y != 0){
+        //     let angle = Math.atan2(this.body.velocity.y, this.body.velocity.x);
+        //     this.setRotation(angle - Math.PI/2);
+        // }
     }
 
     goToMeetingSpot(){
@@ -187,7 +185,7 @@ class Mob extends Entity{
             if(this.scene.meetingSpotCounts[this.spotIndex] > 1 && !this.stunned){
                 let rate = gameSettings.infectionRate
                 if(this.masked)
-                    rate *= 0.5;
+                    rate /= gameSettings.maskReductionFactor;
 
                 this.scene.infections += rate;
             }

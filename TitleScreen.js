@@ -6,18 +6,23 @@ class TitleScreen extends Phaser.Scene{
         // Load Assets Here
         this.load.image("title", "assets/images/MaskMan.png");
         this.load.image("background", "assets/images/MaskMan_background.png");
-        this.load.spritesheet("mob", "assets/sprites/ship.png",{
-            frameWidth: 16,
-            frameHeight: 16
-        });
-        this.load.spritesheet("player", "assets/sprites/Mask_Man_Player.png",{
-            frameWidth: 16,
-            frameHeight: 16
-        });
-        this.load.spritesheet("projectile", "assets/sprites/beam.png",{
-            frameWidth: 16,
-            frameHeight: 16
-        })
+        this.load.image("player", "assets/sprites/Mask_Man_Player.png");
+        this.load.image("mob1", "assets/sprites/MaskMan_Maskless1.png");
+        this.load.image("mob2", "assets/sprites/MaskMan_Maskless2.png");
+        this.load.image("mob3", "assets/sprites/MaskMan_Maskless3.png");
+        this.load.image("masked1", "assets/sprites/MaskMan_Masked1.png");
+        this.load.image("masked2", "assets/sprites/MaskMan_Masked2.png");
+        this.load.image("masked3", "assets/sprites/MaskMan_Masked3.png");
+        this.load.image("karen", "assets/sprites/MaskMan_Karen.png");
+        this.load.image("maskedKaren", "assets/sprites/MaskMan_Karenmasked.png");
+
+
+        this.load.image("projectile", "assets/sprites/mask_projectile.png");
+
+        this.load.audio("crowd1", 'assets/sounds/crowd1.wav');
+        this.load.audio("crowd2", 'assets/sounds/crowd2.wav');
+        this.load.audio("music", 'assets/sounds/Mask_Man_Music.wav');
+
     }
     create() {
         // Create animations here
@@ -25,25 +30,6 @@ class TitleScreen extends Phaser.Scene{
         this.add.text(140, 200, "Click anywhere to start");
         image.setInteractive({useHandCursor: true});
         image.on('pointerdown', () => this.clickStart());
-
-        this.anims.create({
-            key: "mob1_anim",
-            frames: this.anims.generateFrameNumbers("mob"),
-            frameRate: 20,
-            repeat: -1
-        });
-        this.anims.create({
-            key: "run",
-            frames: this.anims.generateFrameNumbers("player"),
-            frameRate: 20,
-            repeat: -1
-        });
-        this.anims.create({
-            key: "shoot",
-            frames: this.anims.generateFrameNumbers("projectile"),
-            frameRate: 20,
-            repeat: -1,
-        });
     }
 
     clickStart(){

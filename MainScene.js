@@ -6,6 +6,12 @@ class MainScene extends Phaser.Scene{
     create() {
         this.background = this.add.tileSprite(0, 0, config.width * 5, config.height * 5, "background");
         this.background.setOrigin(0,0);
+        this.music = this.sound.add('music').play({volume: 0.5, loop: true});
+
+        this.crowd = [this.sound.add('crowd1'), this.sound.add('crowd2')];
+
+        this.crowd[0].play({volume: 0.2, loop: true});
+        this.crowd[1].play({volume: 0, loop: true});
 
         this.infections = 0;
         this.infectionText = this.add.text(10, 10, "Infection: " + this.infections, {
@@ -17,7 +23,7 @@ class MainScene extends Phaser.Scene{
 
         let spotSize = gameSettings.spotSize;
         this.meetingSpots = this.randomLocations(spotSize);
-        this.meetingSpotCounts = new Array(spotSize).fill(0)
+        this.meetingSpotCounts = new Array(spotSize).fill(0);
 
         this.projectiles = this.add.group();
         this.mobs = this.add.group();
@@ -40,8 +46,9 @@ class MainScene extends Phaser.Scene{
         //this.background.tilePositionY -= 0.5;
         this.player.update();
         this.updateUI();
-        console.log(this.infections);
-        console.log(this.meetingSpotCounts)
+        this.updateSound();
+        // console.log(this.infections);
+        // console.log(this.meetingSpotCounts)
         //console.log(this.projectiles.getChildren().length)
         for(var i = 0; i < this.projectiles.getChildren().length; i++){
             var beam = this.projectiles.getChildren()[i];
@@ -70,6 +77,17 @@ class MainScene extends Phaser.Scene{
         this.infectionText.setText("Infection: " + Math.floor(this.infections));
     }
 
+    updateSound(){
+        let maxIndex = indexOfMax(this.meetingSpotCounts);
+
+        let dist = Math.sqrt(Math.pow(this.meetingSpots[maxIndex][0] - this.player.x, 2) + Math.pow(this.meetingSpots[maxIndex][1] - this.player.y, 2));
+        let volume = Math.min(1, (100/dist).toFixed(3));
+
+        if(this.meetingSpotCounts[maxIndex] > 1)
+            this.crowd[1].setVolume(volume);
+        else this.crowd[1].setVolume(0);
+    }
+
     initCollisions(){
         this.physics.add.collider(this.player, this.mobs, function(player, mob){
             player.stunned = true;
@@ -86,4 +104,22 @@ class MainScene extends Phaser.Scene{
             proj.destroy();
         });
     }
+}
+
+function indexOfMax(arr) {
+    if (arr.length === 0) {
+        return -1;
+    }
+
+    var max = arr[0];
+    var maxIndex = 0;
+
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            maxIndex = i;
+            max = arr[i];
+        }
+    }
+
+    return maxIndex;
 }
