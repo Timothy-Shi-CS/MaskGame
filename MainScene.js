@@ -28,9 +28,16 @@ class MainScene extends Phaser.Scene{
         this.infectionText = this.add.text(10, 10, "Town Health: " + gameSettings.infectionMax, textStyle);
         this.healthText = this.add.text(10, 30, "Mask Man Health: " + gameSettings.playerHealth, textStyle);
         this.maskedText = this.add.text(10, 50, "Masked: " + 0 + '/' + gameSettings.mobSize, textStyle);
+        this.karenText = this.add.text(config.width - 160, 10, "Karen Health: " + gameSettings.karenHealth, textStyle);
         this.infectionText.setScrollFactor(0);
         this.healthText.setScrollFactor(0);
         this.maskedText.setScrollFactor(0);
+        this.karenText.setScrollFactor(0);
+
+        this.infectionText.setDepth(2);
+        this.healthText.setDepth(2);
+        this.maskedText.setDepth(2);
+        this.karenText.setDepth(2);
 
         let spotSize = gameSettings.spotSize;
         this.meetingSpots = this.randomLocations(spotSize);
@@ -118,6 +125,7 @@ class MainScene extends Phaser.Scene{
         this.infectionText.setText("Town Health: " + (gameSettings.infectionMax - Math.floor(this.infections)));
         this.healthText.setText("Mask Man Health: " + this.player.health);
         this.maskedText.setText("Masked: " + this.maskedCount + '/' + gameSettings.mobSize);
+        this.karenText.setText("Karen Health: " + this.karen.health);
     }
 
     updateSound(){

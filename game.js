@@ -4,7 +4,7 @@ var gameSettings = {
     mobSpeedMin: 40,
     chargeSpeed: 400,
     bulletSpeed: 500,
-    stunTime: 5000,
+    stunTime: 2500,
     shootDelay: 500,
     collideCount: 1,
     infectionRate: 0.005,
