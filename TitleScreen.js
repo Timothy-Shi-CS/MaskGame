@@ -4,6 +4,7 @@ class TitleScreen extends Phaser.Scene{
     }
     preload(){
         // Load Assets Here
+        this.load.image("title", "assets/images/MaskMan.png");
         this.load.image("background", "assets/images/MaskMan_background.png");
         this.load.spritesheet("mob", "assets/sprites/ship.png",{
             frameWidth: 16,
@@ -20,8 +21,10 @@ class TitleScreen extends Phaser.Scene{
     }
     create() {
         // Create animations here
-        this.add.text(20, 20, "Loading game...");
-        this.scene.start("startGame");
+        var image = this.add.image(240, 180, "title");
+        this.add.text(140, 200, "Click anywhere to start");
+        image.setInteractive({useHandCursor: true});
+        image.on('pointerdown', () => this.clickStart());
 
         this.anims.create({
             key: "mob1_anim",
@@ -41,5 +44,9 @@ class TitleScreen extends Phaser.Scene{
             frameRate: 20,
             repeat: -1,
         });
+    }
+
+    clickStart(){
+        this.scene.start("startGame");
     }
 }
