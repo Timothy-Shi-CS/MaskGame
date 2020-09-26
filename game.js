@@ -6,7 +6,8 @@ var gameSettings = {
     bulletSpeed: 200,
     stunTime: 5000,
     shootDelay: 500,
-    collideCount: 3
+    collideCount: 2,
+    infectionRate: 0.005
 }
 
 var config = {

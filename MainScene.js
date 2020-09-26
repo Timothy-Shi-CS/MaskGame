@@ -8,6 +8,13 @@ class MainScene extends Phaser.Scene{
         this.background.setOrigin(0,0);
 
         this.infections = 0;
+        this.infectionText = this.add.text(10, 10, "Infection: " + this.infections, {
+            fontFamily: 'monospace',
+            fontSize: 16,
+            align: 'left'
+        });
+        this.infectionText.setScrollFactor(0);
+
         let spotSize = 2;
         this.meetingSpots = this.randomLocations(spotSize);
         this.meetingSpotCounts = new Array(spotSize).fill(0)
@@ -30,6 +37,7 @@ class MainScene extends Phaser.Scene{
     update(){
         //this.background.tilePositionY -= 0.5;
         this.player.update();
+        this.updateUI();
         console.log(this.infections);
         console.log(this.meetingSpotCounts)
         //console.log(this.projectiles.getChildren().length)
@@ -47,13 +55,17 @@ class MainScene extends Phaser.Scene{
         let locs = [];
         for(let i = 0; i < length; i++){
             let point = [];
-            let padding = 100;
+            let padding = 32;
             point.push(Phaser.Math.Between(padding, this.background.width - padding));
-            point.push(Phaser.Math.Between(padding, this.background.width - padding));
+            point.push(Phaser.Math.Between(padding, this.background.height - padding));
             locs.push(point)
         }
 
         return locs;
+    }
+
+    updateUI(){
+        this.infectionText.setText("Infection: " + Math.floor(this.infections));
     }
 
     initCollisions(){
@@ -67,7 +79,7 @@ class MainScene extends Phaser.Scene{
 
         });
 
-        this.physics.add.collider(this.projectiles, this.mobs, function(proj, mob){
+        this.physics.add.overlap(this.projectiles, this.mobs, function(proj, mob){
             mob.wearMask();
             proj.destroy();
         });
